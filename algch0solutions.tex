@@ -1,0 +1,592 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{mathtools}
+\usepackage{cancel}
+\newcommand{\morph}[3]{\text{Hom}_{#1}(#2,#3)}
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+
+% Swap the definition of \abs* and \norm*, so that \abs
+% and \norm resizes the size of the brackets, and the 
+% starred version does not.
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+%
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
+\author{Tyler Antony}
+\title{Algebra Chapter 0 Solutions}
+\begin{document}
+\section*{I.1: Naive Set Theory}
+\subsection*{I.1.1} \textit{Locate a disucssion of Russell's paradox, and understand it.} \\ 
+
+\noindent \textbf{Solution:} Consider the set $X = \{a|a \notin a\}$, where $a$ represents a set.  If $X \in X$, by definition, $X \notin X$, a contradiction.  If $X \notin X$, by definition, $X \in X$, another contradiction. \\
+This was noticed by Ernst Zermelo and Bertrand Russell, and caused an effort to make set theory more rigorous.  This effort resulted in the Zermelo-Fr{\"a}nkel axioms of set theory.  The solution to the paradox is that the aforementioned $X$ is not a set in the first place. $\square$
+
+\subsection*{I.1.2} \textit{Prove that if $\sim$ is an equivalence relation on a set $S$, then the corresponding family $\mathscr{P}_{\sim}$ defined in \S 1.5 is indeed a partition of $S$: that is, its elements are nonempty, disjoint, and their union is $S$.} \\ 
+
+\noindent\textbf{Solution:}  Let $\sim$ be an equivalence relation on $S$ and let $\mathscr{P}_{\sim} = S/\sim$ be the set of equivalence classes of elements of $S$ with respect to $\sim$.  If $S$ is non-empty, then it has at least one element $x$.  Since $\sim$ is an equivalence relation, it is reflexive, so that $x \sim x$.  Hence, the equivalence class $[x]_{\sim} \neq \varnothing$ for any $x \in S$ as $x \in [x]_{\sim}$. Let $[x]_{\sim}$ and $[y]_{\sim}$ be distinct equivalence classes in $S$.  That is, there exists some $z \in [x]_{\sim}$ such that $z \notin [y]_{\sim}$, or vice versa (we suppose the former without loss of generality).  Next, suppose that  $[x]_{\sim}$ and $[y]_{\sim}$ are \textit{not} disjoint, that is, there exists $w \in S$ such that $w \in [x]_{\sim}$ and $w \in [y]_{\sim}$.  By definition, $w \sim x$.  From above, we also have $x \sim z$.  Thus, since $\sim$ is an equivalence relation and is transitive, $w \sim z$.  However, by definition we also have $y \sim w$, and by transitivity we acquire $y \sim z$, hence $z \in [y]_{\sim}$, contradicting our definition of $z$, hence no such point is shared by distinct equivalence classes of $S$, hence distinct equivalence classes are disjoint.  Since for every $x \in S$, we have $x \in [x]_{\sim}$, we have $\bigcup_{x\in S}[x]_{\sim} = S$.  Thus, $\mathscr{P}_{\sim}$ is a partition of $S$. $\square$
+
+\subsection*{I.1.3} \textit{Given a partition $\mathscr{P}$ on a set $S$, show how to define a relation $\sim$ on $S$ such that $\mathscr{P}$ is the corresponding partition.} \\
+
+\noindent\textbf{Solution:} Let $\mathscr{P}$ be a partition of $S$. Since the union of all sets in the partition is $S$, for every $x \in S$, $x$ is in a unique set of the partition $\mathscr{P}$, since the sets of a partition are disjoint.  Define $\sim$ in on $S$ such that $x \sim y$ if and only if $x$ and $y$ lie in the same set of the partition.$\square$
+
+\subsection*{I.1.4} \textit{How many different equivalence relations may be defined on the set $\{1,2,3\}$?} \\
+
+\noindent\textbf{Solution:} There are five such partitions: $\{1,2,3\}$; $\{\{1,2\},\{3\}\}$; $\{\{1,3\},\{2\}\}$;$\{\{2,3\},\{1\}\}$; and $\{\{1\},\{2\},\{3\}\}$.$\square$
+
+\subsection*{I.1.5} \textit{Give an example of a relation that is reflexive and symmetric but not transitive. What happens if you attempt to use this relation to define a partition on the set? (Hint: Thinking about the second question will help you answer the first one.)} \\
+
+\noindent\textbf{Solution:} Let the relation $R$ be defined on the set $S = {x,y,z}$ by simply specifying $R \subset S^2 = \{(x,x),(y,y),(z,z),(x,y),(y,x),(y,z),(z,y)\}$. This relation is reflexive and symmetric, but is not transitive since $x \sim y$ and $y \sim z$ but $x \not\sim z$.$\square$
+
+\subsection*{I.1.6} \textit{Define a relation $\sim$ on the set $\mathbb{R}$ of real numbers by setting $a \sim b \iff b-a \in \mathbb{Z}$. Prove that this is an equivalence relation, and find a 'compelling' description for $\mathbb{R}/\sim$.  Do the same for the relation $(a_1,a_2)\approx (b_1,b_2) \iff b_1 - a_1 \in \mathbb{Z}$ and ${b_2 - a_2} \in \mathbb{Z}$.} \\
+
+\noindent\textbf{Solution:} Since $a - a = 0 \in \mathbb{Z}$ for all $a \in \mathbb{R}$, $a \sim a$.  Suppose $a \sim b$.  By definition $b - a = n$ for some $n \in \mathbb{Z}$.  Then $a - b = -n \in \mathbb{Z}$, so that $b \sim a$.  Thus, $\sim$ is reflexive and symmetric.  Next suppose $a \sim b$ and $b \sim c$.  Then $b - a = m \in \mathbb{Z}$ and $c - b = n \in \mathbb{Z}$.  We have $c - a = (c - b) + (b - a) = n - m \in \mathbb{Z}$.  Thus, $a \sim c$ and $\sim$ is transitive.  Since $\sim$ is symmetric, reflexive, and transitive, it is an equivalence relation.  The interpretation of $\sim$ is that it is the set of all sets of translated integers on the real line.
+
+\noindent Consider the relation $\approx$ defined as above.  The proof that this is an equivalence relation is so similar to the proof given above that it is omitted.  The partition described by this equivalence relation is the set of all vertically and horizontally translated sets of the integer point lattice $\mathbb{Z} \times \mathbb{Z}$ in the plane.$\square$
+
+\newpage
+
+\section*{I.2: Functions Between Sets}
+
+\subsection*{I.2.1} \textit{How many different bijections are there between a set $S$ with $n$ elements and itself?} \\
+
+\noindent \textbf{Solution:}  Label $S$ so that $S = \{1,...,n\}$.  The first element can be mapped to any of the $n$ elements of $S$.  Given the mapping for the first element, $(n-1)$ elements remain for the second element, so there are $n(n-1)$ ways to map the first two elements.  By induction, we conclude that there are $n(n-1)(n-2)...(2)(1) = n!$ ways of forming a bijection from a set of $n$ elements to itself.$\square$
+
+\subsection*{I.2.2} \textit{Prove statement (2) in Proposition 2.1. You may assume that given a family of disjoint nonempty subsets of a set, there is a way to choose one element in each member of the family.}\\
+
+\noindent \textbf{Solution:} Statement (2) of Proposition 2.1 states \textit{f has a right-inverse if and only if it is surjective}. \\
+
+\noindent $\implies$) Suppose that $f$ has a right inverse $g$.  Then, by definition, for every $b \in B$, $f(g(b)) = b$.  Then it is clear that $g(b) \in f^{-1}(b)$, so that $f$ is surjective.
+
+\noindent $\impliedby$) Suppose that $f$ is surjective.  By definition, the fibers of every element of $B$, $f^{-1}(b)$, are disjoint and non-empty.  If we assume that there is a way to choose one element in each member of this disjoint nonempty subsets of $B$, then let $a_b$ be the element of $A$ chosen from $f^{-1}(b)$.  Then, define $g(b) = a_b$.  Then we have $f(g(b)) = f(a_b) = b$ by definition, and $g$ is a left inverse of $f$. $\square$
+
+\subsection*{I.2.3} \textit{Prove that the inverse of a bijection is a bijection and that the composition of two bijections is a bijection}.
+
+\noindent \textbf{Solution:} Suppose $f$ is a bijection.  Then $f$ has an inverse, $f^{-1}$.  We have $f \circ f^{-1} = \text{id}_{B}$ and $f^{-1} \circ f = \text{id}_{A}$.  Then $f$ is the inverse of $f^{-1}$, hence $f^{-1}$ is a bijection.  Suppose next that $f: A \rightarrow B$ and $g: B \rightarrow C$ are bijections, and consider $g \circ f: A \rightarrow C$.  Then $(f^{-1} \circ g^{-1}) \circ (g \circ f) = \text{id}_{A}$, and $(g \circ f) \circ (f^{-1} \circ g^{-1}) = \text{id}_B$.  Hence $g \circ f$ has an inverse and is therefore bijective.$\square$
+
+\subsection*{I.2.4} \textit{Prove that 'isomorphism' is an equivalence relation (on any set of sets).}
+
+\noindent \textbf{Solution:} Let $S$ be a set of sets and let $A$, $B$, $C$ represent elements of $S$.  Since $\text{id}_A : A \rightarrow A$ is a bijection, we have $A \sim A$ for all sets $A$.  Suppose $A \sim B$, so that there exists a bijection $f: A \rightarrow B$.  However, we see from above that the inverse $f^{-1}: B \rightarrow A$ is also a bijection, hence $B \sim A$.  Suppose next $A \sim B$ and $B \sim C$.  Then there exist bijections $f: A \rightarrow B$ and $g: B \rightarrow C$.  From above, their composition $g \circ f: A \rightarrow C$ is a bijection, hence $A \sim C$.  We have proven the properties of reflexivity, symmetry, and transitivity for isomorphisms and have therefore proven that isomorphism is an equivalence relation in sets of sets. $\square$
+
+\subsection*{I.2.5} \textit{Formulate a notion of epimorphism, in the style of the notion of monomorphism seen in \S 2.6, and prove a result analogous to Proposition 2.3, for epimorphisms and surjections.}
+
+\noindent \textbf{Solution:} Definition of epimorphism:  A set is an \textit{epimorphism} if and only if for all sets $Z$ and for all functions $g: Z \rightarrow B$, there exists some function $\alpha: Z \rightarrow A$ such that $f \circ \alpha = g$.
+
+\noindent \textbf{Theorem:} A function is surjective if and only if it is an epimorphism. \\
+\noindent \textit{Proof:}$\implies$)  Let $f$ be a surjective function and $g$ a function from $Z$ to $B$.  Since $f$ is surjective, the fibers of the elements of $B$, $f^{-1}(\{b\})$, are non-empty.  Then, define $\alpha: Z \rightarrow A$ such that $\alpha(z) = a$ for some $a \in f^{-1}(\{g(z)\})$, which is non-empty because $f$ is surjective, assuming we are allowed to choose a member of each fiber.  It is clear that $f \circ \alpha = g$. \\
+\noindent $\impliedby$) Suppose $f$ is an epimorphism.  Let $Z=B$ and $g = \text{id}_B$.  Since $f$ is an epimorphism, there exists $\alpha: B \rightarrow B$ such that $f \circ \alpha = \text{id}_B$.  However, this is precisely what it means to have a left inverse, which implies that $f$ is surjective. $\square$ \\
+
+\noindent\textbf{INTENDED Solution:}  The solution above was not actually what was intended.  The intended definition of epimorphism as given in section 4 (page 29) of the book is: for all sets $Z$ and all functions $\beta',\beta'':B \rightarrow Z$, $f$ is an epimorphism if and only if $\beta' \circ f = \beta'' \circ f \rightarrow \beta' = \beta''$.\\
+\noindent\textbf{Theorem:} A function is surjective if and only if it is an epimorphism.\\
+\noindent\textit{Proof:}$\implies$) Suppose $f:A \rightarrow B$ is surjective and $\beta',\beta'':B \rightarrow Z$ are such that $\beta' \circ f =\beta'' \circ f$. Let $b \in B$.  Since $f$ is surjective, there exists some $a \in A$ such that $f(a)=b$, hence $\beta'(b) = \beta'(f(a)) = \beta''(f(a)) = \beta''(b)$.  Thus, $\beta' = \beta''$.\\
+\noindent$\impliedby$) Suppose $f$ is not surjective.  We will show by contradiction that $f$ is not an epimorphism.  If $f$ is not surjective, there exists some $b_0 \in B$ such that $f(a) \neq b$ for all $a \in A$.  Let $Z  = \{0,1\}$ and define $\beta': B \rightarrow Z$ so that $\beta'(b) = 0$ for $b \neq b_0$ and $\beta'(b) = 1$ for $b = b_0$.  Define $\beta''(b) = 0$.  Thus, it is clear $\beta' \circ f = \beta'' \circ f$ with $\beta' \neq \beta''$, so that $f$ is not an epimorphism.  Hence, surjective functions are precisely those functions which are epimorphisms in the $\textsf{Set}$ category. $\square$
+
+\subsection*{I.2.6} \textit{With notation as in Example 2.4, explain how any function $f: A \rightarrow B$ determines a section of $\pi_A$.} \\
+
+\noindent \textbf{Solution:} A section is a right inverse of a projection function.  We need to find $g: A \rightarrow A \times B$ such that $\pi_A \circ g = \text{id}_A$.  To do this, we can simply choose any function $f: A \rightarrow B$ and set $g(a) = (a, f(a))$.  It is clear that this is a right inverse (or section) of the projection function. $\square$
+
+\subsection*{I.2.7} \textit{Let $f: A \rightarrow B$} be any function. Prove that the graph $\Gamma_f$ of $f$ is isomorphic to $A$. \\
+
+\noindent \textbf{Solution:} Define the function $\phi: \Gamma_f \rightarrow A$ by $\phi((a, f(a))) = a$.  Since $f$ is a function, it is defined for all $a \in A$, hence the fiber of $a$ is always non-empty and always has $(a, f(a))$ as a member, hence $\phi$ is surjective.  Next, suppose $(a_1, f(a_1) \neq (a_2, f(a_2)$.  If $a_1 = a_2$, then we must have $f(a_1) = f(a_2)$ since $f$ is well-defined.  However, this contradicts the inequality of the ordered pairs.  Thus, $a_1 \neq a_2$, which is to say $\phi((a_1, f(a_1))) \neq \phi((a_2, f(a_2)))$, so that $\phi$ is injective.  Thus, $\phi$ is a bijection and $\Gamma_F \sim A$. $\square$
+
+\subsection*{I.2.8} \textit{Describe as explicitly as you can all terms in the canonical decomposition of the function $\mathbb{R} \rightarrow \mathbb{C}$ defined by $r \mapsto e^{2\pi i r}$. (This exercise matches one assigned previously.  Which one?)} \\
+
+\textbf{Solution: } This exercise matches Exercise I.1.6.    The canonical projection $\mathbb{R} \twoheadrightarrow \mathbb{R}/\sim$ takes $a \in \mathbb{R}$ to the set $\{x \in \mathbb{R} | x = a + n\}$, where $n \in \mathbb{Z}$.  The middle bijection of the canonical decomposition, $\mathbb{R}/\sim \tilde{\rightarrow} \text{im} f$, is simply $f([a]_{\sim} = e^{2 \pi i a})$.  The final injection $\mathbb{C} \hookrightarrow \mathbb{C}$ is just the inclusion of the unit circle into $\mathbb{C}$. $\square$
+
+\subsubsection*{I.2.9}\textit{Show that if $A' \cong A''$, and further $A' \cap B' = \varnothing$ and $A'' \cap B'' = \varnothing$, then $A' \cup B' \cong A'' \cup B''$. Conclude that the operation $A \coprod B$ is well-defined up to isomorphism.} \\
+
+\noindent \textbf{Solution: } By definition, there exist bijections $g: A' \tilde{\rightarrow} B'$ and $h: A'' \tilde{\rightarrow} B''$.  Define $f: A' \cup B' \rightarrow A'' \cup B''$ by $f(x) = g(x)$ if $x \in A'$ and $f(x) = h(x)$ if $x \in B'$.  The function is well defined since $A'$ and $B'$ are disjoint.  Suppose next that $x, y \in A' \cup B'$ with $x \neq y$.  In the first case, $x$ and $y$ are both in $A'$ or both in $B'$.  Without loss of generality, suppose the former. Since $x,y \in A'$ and $g$ is injective, we have $f(x) = g(x) \neq g(y) = f(y)$.  The second case is that $x'$ and $y'$ are not both in $A'$ or $B'$.  Suppose without loss of generality that $x \in A'$ and $y \in B'$. Then $f(x) = g(x) \in A''$ and $f(y) = h(y) \in B''$.  Since $A'' \cap B'' = \varnothing$, $f(x) \neq f(y)$ as in the previous case, hence $f$ is injective.  To prove surjectivity suppose $y \in A'' \cup B''$.  If $y \in A''$, since $g$ is surjective, there exists $x \in A'$ (hence $A' \cup B'$) such that $g(x) = f(x) = y$.  Similarly for $y \in B''$ and $h$.  Hence $f$ is surjective and $f$ is a bijection and the disjoint union is defined to within isomorphism. $\square$.  
+
+\subsection*{I.2.10}\textit{Show that if $A$ and $B$ are finite sets, then $\abs{B^A} = \abs{B}^{\abs{A}}$}. \\
+
+\noindent \textbf{Solution: } For $\abs{A} = 1$, there are $\abs{B}$ elements which it can be mapped to, hence $\abs{B}^1$ functions. Suppose that for $\abs{A} = n$, $\abs{B^A} = \abs{B}^{\abs{A}}.$  Then consider the case $\abs{A} = n+1$.  The first $n$ elements can be mapped in $\abs{B}^{\abs{A}}$ ways by our inductive hypothesis, and the $n+1$-st element can be mapped in $\abs{B}$ ways as well.  Hence the number of ways of mapping $n+1$ elements is $\abs{B}^n \abs{B} = \abs{B}^{n+1} = \abs{B}^{\abs{A}}$.  By induction, we have our proof. $\square$
+
+\subsection*{I.2.11}\textit{In view of Exercise 2.10, it is not unreasonable to use $2^A$ to denote the set of functions from an arbitrary set $A$ to a set with 2 elements (say $\{0,1\}$). Prove that there is a bijection between $2^A$ and the power set of A.} \\
+
+\noindent \textbf{Solution: }Let $S \subset A$. Define $f_S: A \rightarrow \{0,1\}$ so that for $a \in A$, $f_S(a) = 0$ if $a \notin S$ and $f_S(a) = 1$ if $a \in S$.  Next, define $g: \mathscr{P}(A) \rightarrow 2^A$, by $g(S) = f_S$ for all $S \in \mathscr{P}(A)$.  It is obvious that $g$ is well defined.  Suppose $S_1$, $S_2 \in \mathscr{P}(A)$, with $S_1 \neq S_2$.  Then there exists some $s_1 \in S_1$ such that $s_1 \notin S_2$, or vice versa. Without loss of generality, suppose the former.  Then, $g(S_1)(s_1)=f_{S_1}(s_1) = 1$ and $g(S_2)(s_1)=f_{S_2}(s_1) = 0$.  Hence, $g(S_1) \neq g(S_2)$, and $g$ is injective.  Next, suppose $f \in 2^A$, so that $f:A \rightarrow \{0,1\}$.  Form the subset $S \subset A$ consisting of all $a \in A$ such that $f(a) = 1$.  Then $g(S) = f$, and $g$ is surjective.  Since $g$ is injective and surjective, $g$ is a bijection between $2^A$ and $\mathscr{P}(A)$. $\square$
+
+\newpage
+
+\section*{I.3: Categories}
+
+\subsection*{I.3.1}\textit{Let $\mathcal{C}$ be a category.  Consider a structure $\mathcal{C}^{op}$ with $\text{Obj }(\mathcal{C}^{op})= \text{Obj }\mathcal{C}$ and for $A$, $B$ objects of $\mathcal{C}^{op}$ (hence objects of $\mathcal{C}$), $\text{Hom}_{\mathcal{C}^{op}}(A,B) = \text{Hom}_{\mathcal{C}}(A,B)$.  Show how to make this into a category (that is, define composition of morphisms in $\mathcal{C}^{op}$ and verify the properties listed in $\mathsection$3.1.)}
+
+\noindent \textbf{Solution: }The identity morphisms are just the identities of the category $\mathcal{C}$.  The morphisms are simply denoted in the opposite order as the morphisms of the original category.  To prove that this satisfies the properties of morphisms, note that in the original set that if we have morphisms $g \in \text{Hom}_{\mathcal{C}}(C,B)$ and $f \in \text{Hom}_{\mathcal{C}}(B,A)$, there exists a morphism $fg \in \text{Hom}_{\mathcal{C}}(C,A)$.  Simply switching out the sets using the definitions, this is identical to saying that for every morphism $f \in \text{Hom}_{\mathcal{C}^{op}}(A,B)$ and $g \in \text{Hom}_{\mathcal{C}^{op}}(B,C)$, there exists a morphism in $\text{Hom}_{\mathcal{C}^{op}}(A,C)$ which we denote by $gf$.  Hence, the law of composition is satisfied under this definition of compositions.  \\
+
+\noindent Since the morphisms are simply reversed, we have the associativity of the composition law from:
+
+$$[(hg)f]_{\mathcal{C}^{op}} = [f(gh)]_{\mathcal{C}} = [(fg)h]_{\mathcal{C}} = [h(gf)]_{\mathcal{C}^{op}}$$
+
+\noindent That identity morphisms are identities with respect to composition and that sets of morphisms between different object pairs are still disjoint is obvious. $\square$
+
+\subsection*{I.3.2}\textit{If $A$ is a finite set, how large is $\text{End}_{\text{Set}}(A)$?} \\
+
+\noindent\textbf{Solution: } Since $\text{End}_{\text{Set}}(A) = A^A$, $\abs{\text{End}_{\text{Set}}(A)} = \abs{A^A} = \abs{A}^{\abs{A}}$. $\square$
+
+\subsection*{I.3.3} \textit{Formulate precisely what it means to say that $1_a$ is an identity with respect to composition in Example 3.3, and prove this assertion.} \\
+
+\noindent \textbf{Solution:} In this category, if $f = (a,b)$ and $g = (b,c)$ are morphisms, then $gf = (a,c)$.  Hence, $1_a f = (a,a)(a,b) = (a,b)$ by the same definition. $\square$
+
+\subsection*{I.3.4} \textit{Can we define a category in the style of Example 3.3 using the relation $<$ on the set $\mathbb{Z}$?} \\
+
+\noindent \textbf{Solution: }No.  Because $<$ is not reflexive, the required identity morphisms for the relation do not exist. $\square$
+
+\subsection*{I.3.5} \textit{Explain in what sense Example 3.4 is an instance of the categories considered in Example 3.3.} \\
+
+\noindent \textbf{Solution: } It is an instance of the category in Example 3.3 because subset inclusion is reflexive ($A \subset A$ for all sets $A$) and transitive ($A \subset B$ and $B \subset C$ implies $A \subset C$). $\square$
+
+\subsection*{I.3.6} \textit{(Assuming some familiarity with linear algebra.) Define a category $\text{V}$ by taking $\text{Obj}(\text{V}) = \mathbb{N}$ and letting $\text{Hom}_{\mathscr{V}}(n,m) =$ the set of $m \times n$ matrices with real entries, for all $n,m \in \mathbb{N}$. (Use products of matrices to define composition.  Does this category 'feel' familiar?)} \\
+
+\noindent \textbf{Solution: } If $f \in \text{Hom}_{\text{V}}(a,b)$ and $g \in \text{Hom}_{\text{V}}(b,c)$, then since $a \times b$ matrices can be multiplied by $b \times c$ matrices to give $a \times c$ matrices, the composition $gf$ defined by matrix multiplication is indeed a member of $\text{Hom}_{\text{V}}(a,c)$. $\square$
+
+\subsection*{I.3.7}\textit{Define carefully objects and morphisms in Example 3.7, and draw the diagram corresponding to composition.} \\
+
+\noindent\textbf{Solution: }  The coslice category is defined with objects as morphisms of a category $\textsc{C}$ from $\text{Hom}_{\textsc{C}}(A,Z)$ where $A$ is a fixed object of $\textsc{C}$ and $Z$ is any object of $\textsc{C}$.  Diagramatically, they are arrows:
+
+\begin{center}
+\begin{tikzcd}
+A \arrow[dd,"f"']\\
+\\
+Z
+\end{tikzcd}
+\end{center}
+
+\noindent Following the example of slice categories, the morphisms of the coslice category are commutative diagrams corresponding to morphisms in $\textsc{C}$, namely $\sigma \in \text{Hom}_{\text{C}}(Z_1, Z_2)$ such that if $f \in \morph{C}{A}{Z_1}$ and $g \in \morph{C}{A}{Z_2}$, then $\sigma f = g$. Diagramatically, the morphisms between $f$ and $g$ are represented by:
+
+\begin{center}
+\begin{tikzcd}
+&A \arrow[dl, "f"']\arrow[dr, "g"]&\\
+Z_1 \arrow[rr, "\sigma"]&         &Z_2
+\end{tikzcd}
+\end{center}
+
+\noindent $\square$
+
+\subsection*{I.3.8} \textit{A subcategory $\text{C}'$ of a category $\text{C}$ consists of a collection of objects of $\text{C}$ with sets of morphisms $\morph{C}'{A}{B} \subset \morph{C}{A}{B}$ for all objects $A$, $B$ in $\text{Obj}(\textsf{C}')$, such that identities and compositions in $\text{C}$ make $\textsf{C'}$ into a category.  A subcategory $\text{C'}$ is full if $\morph{\textsf{C'}}{A}{B} = \morph{\textsf{C}}{A}{B}$ for all $A$, $B$ in $\text{Obj}(\textsf{C})$. Construct a category of infinite sets and explain how it may be viewed as a full subcategory of $\textsf{Set}$.}\\
+
+\noindent \textbf{Solution: } The above category can be viewed as a full subcategory of $\textsf{Set}$ because it is obvious that $\morph{\textsf{C'}}{A}{B} = \morph{\textsf{C}}{A}{B}$. Furthermore, identity functions and associativity of functions are unaltered when they are between infinite sets. $\square$
+
+\subsection*{I.3.9}\textit{An alternative to the notion of multiset introduced in section 2.2 is obtained by considering sets endowed with equivalence relations; equivalent elements are taken to be multiple instances of elements 'of the same kind'.  Define a notion of morphism between such enhanced sets, obtaining a category $\textsf{MSet}$ containing (a 'copy' of) $\textsf{Set}$ as a full subcategory. (There may be more than one reasonable way to do this! This is intentionally an open-ended exercise.) Which objects in $\textsf{Mset}$ determine ordinary multisets as defined in section 2.2 and how?  Spell out what a morphism of multisets would be from this point of view. (There are several natural notions of morphisms of multisets.  Try to define morphisms in $\textsf{MSet}$ so that the notion you obtain for ordinary multisets captures your intuitive understanding of these objects.)}\\
+
+\noindent \textbf{Solution: }  Define the objects of $\textsf{MSet}$ to be sets $A$ equipped with an equivalence relation $\sim$.  The morphisms of the set are then defined so that $f \in \morph{\textsf{Mset}}{A}{B}$ if $f: A / \sim \rightarrow B / \sim$ is a function between equivalence relations of $A$ and $B$.  Then it is obvious that $\textsf{MSet}$ is a category. $\square$ 
+
+\subsection*{I.3.10} \textit{Since the objects of a category $\textsf{C}$ are not (necessarily interpreted as) sets, it is not clear how to make sense of a notion of 'subobject' in general.  In some situations it does make sense to talk about subobjects, and the subobjects of any given object $A$ in $\textsf{C}$ are in on-to-one correspondence with the morphisms $A \rightarrow \Omega$ for a fixed, special object $\Omega$ of $\textsf{C}$, called a subobject classifier.  Show that $\textsf{Set}$ has a subobject classifier.} \\
+
+\noindent \textbf{Solution: } The category $\textsf{Set}$ has a subobject classifier $\Omega = \{0,1\}$.  One can define an isomorphism $\phi: \mathcal{P}(A) \rightarrow \{0,1\}^A$ as follows: If $A_0 \subset A$, then $\phi(A_0) = f_{A_0}: A \rightarrow \{0,1\}$, where $f_X:A \rightarrow \{0,1\}$ is defined such that for $a \in A$, $f(a) = 0$ if $a \notin X$ and $f(a) = 1$ if $a \in X$.  In fact, this function/morphism was defined in exercise I.2.11, and it is proven there that this is a bijection. $\square$
+
+\subsection*{I.3.11} \textit{Draw the relevant diagrams and define composition and identities for the category $\textsf{C}^{A,B}$ mentioned in Example 3.9.  Do the same for the category $\textsf{C}^{\alpha, \beta}$ mentioned in Example 3.10}. \\
+
+\noindent \textbf{Solution: }  For the category $\textsf{C}^{A,B}$, the objects consist of two fixed objects of $\textsf{C}$, $A$ and $B$, together with morphisms $f \in \morph{\textsf{C}}{A}{Z}$ and $g \in \morph{\textsf{C}}{B}{Z}$.  Diagramatically, the objects of $\textsf{C}^A,B$ can be represented by:
+
+\begin{center}
+\begin{tikzcd}
+ &A \arrow[dl,"f"']\\
+Z&\\
+ &B\arrow[ul, "g"]
+\end{tikzcd}
+\end{center}
+
+\noindent Then a morphism in this category in the set $\morph{\textsf{C}^{A,B}}{Z_1}{Z_2}$ is the diagram:
+
+\begin{center}
+\begin{tikzcd}
+   &&A \arrow[dl,"f_1"']\arrow[dll, bend right, "f_2"']\\
+Z_2&Z_1\arrow[l,"\sigma"]&\\
+   &&B\arrow[ul, "g_1"]\arrow[ull, bend left, "g_2"]
+\end{tikzcd}
+\end{center}
+
+\noindent Corresponding to the morphism $\sigma \in \morph{\textsf{C}}{Z_1}{Z_2}$. \\
+
+\noindent For the fibered category $\textsl{C}^{\alpha, \beta}$, the objects are the commutative diagrams:
+
+\begin{center}
+\begin{tikzcd}
+ &A \arrow[dl,"f"']\\
+Z&&C\arrow[ul, "\alpha"']\arrow[dl, "\beta"]  \\
+ &B\arrow[ul, "g"]
+\end{tikzcd}
+\end{center}
+
+\noindent and the morphisms correspond to the commutative diagrams:
+
+\begin{center}
+\begin{tikzcd}
+   &&A \arrow[dl,"f_1"']\arrow[dll, bend right, "f_2"']\\
+Z_2&Z_1\arrow[l,"\sigma"]&&C\arrow[ul, "\alpha"']\arrow[dl, "\beta"]\\
+   &&B\arrow[ul, "g_1"]\arrow[ull, bend left, "g_2"]
+\end{tikzcd}
+\end{center}
+
+\noindent Which is essentially $\textsf{C}_{\alpha,\beta}$ with the arrows reversed. $\square$
+
+\newpage
+
+\section*{I.4: Morphisms}
+\subsection*{I.4.1} \textit{Composition is defined for two morphisms.  If more than two morphisms are given, e.g,}
+
+\begin{center}
+\begin{tikzcd}
+A\arrow[r,"f"]&B\arrow[r,"g"]&C\arrow[r,"h"]&D\arrow[r,"i"]&E
+\end{tikzcd}
+\end{center}
+
+\noindent \textit{then one may compose them in several ways, for example:}
+
+$$(ih)(gf),\text{  }(i(hg))f,\text{  }i((hg)f),\text{  }\text{etc.}$$
+
+\noindent \textit{so that at every step one is only composing two morphisms.  Prove that the result of any such nested composition is independent of the placement f the parentheses.}\\
+
+\noindent\textbf{Solution: } For $n = 3$, we know from associativity of morphisms that evaluation order for $f_n f_{n-1}\dots f_1$ is immaterial.  Suppose that the order is immaterial for some integer $n$ and consider choices for $f_{n+1}f_n f_{n-1}\dots f_1$.  Then the final evaluation will be of the form $(f_{n+1}f_n f_{n-1} \dots f_i)(f_{i-1}\dots f_1)$.  Since order is immaterial for products of length less than or equal to $n$, we have $(f_{n+1}f_n f_{n-1} \dots f_i) = f_{n+1}(f_n f_{n-1} \dots f_i)$.  Thus, the final evaluation is then $f_{n+1}(f_n f_{n-1} \dots f_i)(f_{i-1}\dots f_1) = f_{n+1}(f_{n+1}f_n f_{n-1}\dots f_1)$ by associativity.  Therefore, the order of evaluation for $n+1$ terms is also immaterial, and by induction the order of evaluation of morphisms is always immaterial and general associativity is true. $\square$
+
+\subsection*{I.4.2} \textit{In Example 3.3 we have seen how to construct a category from a set endowed with a relation, provided this latter is reflexive and transitive.  For what types of relations is the corresponding category a groupoid?} \\
+
+\noindent \textbf{Solution: } In a groupoid, every morphism is an isomorphism.  Hence, for all $f \in \morph{C}{A}{B}$ there exists some $g \in \morph{C}{B}{A}$ with $gf=1_A$ and $fg = 1_B$.  In the category built from a relation $\sim$, this is saying that if $a \sim b$, we have $b \sim a$, hence the relation is also symmetric and therefore must be an equivalence relation. $\square$
+
+\subsection*{I.4.3} \textit{Let $A,B$ be objects of a category $\textsf{C}$ and let $f \in \morph{C}{A}{B}$ be a morphism.}
+\begin{itemize}
+\item \textit{Prove that if $f$ has a right-inerse, then $f$ is an epimorphism.}
+\item \textit{Show that the converse does not hold, by giving an explicit example of a category and an epimorphism without a right-inverse.}
+\end{itemize}
+
+\noindent \textbf{Solution: } For the first problem, suppose that $f$ has a right inverse and suppose $\beta', \beta'' \in \morph{\textsf{C}}{B}{Z}$ such that $\beta' f = \beta'' f$. Since $f$ has a right inverse $g \in \morph{\textsf{C}}{A}{B}$, we have $(\beta' f) g = (\beta'' f)g \rightarrow \beta'(fg) = \beta'(fg) \rightarrow \beta' 1_B = \beta'' 1_B \rightarrow \beta' = \beta''$.
+\\
+
+\noindent Let a category $\textsf{C}$ be formed by taking the objects to be elements of $\mathbb{Z}$ and the morphisms to be such that for $a,b\in \mathbb{Z}$, the element $(a,b) \in \morph{\textsf{C}}{a}{b}$ is the only element of $\morph{\textsf{C}}{a}{b}$ if and only if $a \leq b$, otherwise $\morph{\textsf{C}}{a}{b} = \varnothing$.  Then every morphism is an epimorphism, for if $\beta', \beta'' \in \morph{\textsf{C}}{b}{z}$, then both morphisms are necessarily equal since $\morph{\textsf{C}}{b}{z}$ has only one morphism, namely $(b,z)$.  Thus, it is vacuous that for $f \in \morph{\textsf{C}}{a}{b}$ (implying $f = (a,b)$ for some $a \leq b \in \mathbb{Z}$) that $\beta'f = \beta''f \rightarrow \beta' = \beta''$.  Thus, it is clear that every morphism of the category is an epimorphism.  However, suppose $a < b$ is a strict inequality.  Then there cannot exist a right inverse simply because there cannot exist any morphism $g \in \morph{\textsf{C}}{b}{a}$, as it would imply that $a \geq b$, contradicting our assumption, hence there is an example of a category containing morphisms which are epimorphisms that do not have right inverses. $\square$
+
+\subsection*{I.4.4}\textit{Prove that the composition of two monomorphisms is a monomorphim.  Deduce that one can define a subcategory $\textsf{C}_{\text{mono}}$ of a category $\textsf{C}$ by taking the same objects as in $\textsf{C}$ and defining $\morph{\textsf{C}_{\text{mono}}}{A}{B}$ to be the subset of $\morph{\textsf{C}}{A}{B}$ consisting of monomorphisms, for all objects $A,B$.  Do the same for epimorphisms. Can you define a subcategory $\textsf{C}_{\text{nonmono}}$ of $\textsf{C}$ by restricting to morphisms that are not monomorphisms?}\\
+
+\noindent\textbf{Solution: } To prove that the composition of two monomorphisms is a monomorphism, let $f, g$ be monomorphisms with $f \in \morph{\textsf{C}}{A}{B}$ and $g \in \morph{\textsf{C}}{B}{C}$.  Let $\alpha',\alpha'' \in \morph{\textsf{C}}{Z}{A}$ and suppose that $(gf)\alpha' = (gf)\alpha''$.  By the associativity of morphisms, this implies $g(f \alpha') =  g(f \alpha'')$.  Since $g$ is a monomorphism, this implies $f\alpha' = f\alpha''$.  Since $f$ is a monomorphism, $\alpha' = alpha''$.  Hence, it follows that $gf$ is a monomorphism, and compositions of monomorphisms are monomorphisms. One can define $\textsf{C}_{\text{mono}}$ is closed under morphism and therefore that this is a category.\\
+
+\noindent For epimorphisms, let $g$ and $f$ be as above, except they are epimorphisms.  Let $\beta', \beta'' \in \morph{\textsf{C}}{B}{Z}$ with $\beta'(gf) = \beta''(gf)$.  By associativity, we have $(\beta' g)f = (\beta'' g)f$.  Since $f$ is an epimorphism, we have $\beta' g = \beta'' g$, and since $g$ is an epimorphism $\beta' = \beta''$ and so compositions of epimorphisms are epimorphisms and a corresponding category can be defined. \\
+
+\noindent  No category of non-monomorphisms can be defined since identities are monomorphisms! $\square$
+
+
+\subsection*{I.4.5} \textit{Give a concrete description of monomorphisms and epimorphisms in the category $\textsf{MSet}$ you constructed in Exercise 3.9. (Your answer will depend on the notion of morphism you defined in that exercise!)} \\
+
+\noindent\textbf{Solution: }  Since my category for $\textsf{MSet}$ has morphisms that are just subets of $\textsf{Set}$, monomorphisms are just injections and epimorphisms are surjections. $\square$
+
+\newpage
+
+\section*{I.5: Universal properties} 
+
+\subsection*{I.5.1} \textit{Prove that a final object in a category $\textsf{C}$ is initial in the opposite category $\textsf{C}^{op}$.}\\
+
+\noindent \textbf{Solution: }  Suppose $A$ is final in $\textsf{C}$.  Then for any object $Z$ in the category, there exists a unique morphism $f:Z \rightarrow A$.  From this, we know that there exists a unique morphism $f: A \rightarrow Z$, for any object $Z$ of $\textsf{C}^{op}$.  It follows immediately that $A$ is an initial category of $\textsf{C}^{op}$. $\square$
+
+\subsection*{I.5.2} \textit{Prove that $\varnothing$ is the unique initial object in $\textsf{Set}$.} \\
+
+\noindent \textbf{Solution: } Suppose $A$ is a set such that $A \neq \varnothing$.  Then there exists some $a$ such that $a \in A$.  Let $Z = \{0,1\}$.  We can define a function $f_1:A \rightarrow Z$ such that $f_1(a) = 0$.  However, we can also define a function $f_2:A\rightarrow Z$ with $f_2(a) = 1$.  Hence, there are at least two distinct functions $f_1,f_2$ from $A$ to $Z$, and non-empty sets cannot be initial objects of $\textsf{Set}$. $\square$.
+
+\subsection*{I.5.3} \textit{Prove that final objects are unique up to isomorphism.} \\
+
+\noindent \textbf{Solution: } For every object $A$ of $\textsf{C}$ there is at least one element in $\morph{\textsf{C}}{A}{A}$, which is the identity $1_A$.  If $F$ is final, there exists a unique morphism $F \rightarrow F$, which is the identity $1_F$.  Suppose $F_1$ and $F_2$ are both final in $\textsf{C}$.  Since $F_2$ is final, there exists a unique morphism $f: F_1 \rightarrow F_2$.  Similarly, since $F_1$ is final, there exists a unique morphism $g: F_2 \rightarrow F_1$.  Since $gf \in \morph{\textsf{C}}{F_1}{F_1}$, we must have $gf = 1_{F_1}$, and since $fg \in \morph{\textsf{C}}{F_2}{F_2}$, we have $fg = 1_{F_2}$.  Hence, $f: F_1 \rightarrow F_2$ is an isomorphism. $\square$
+
+\subsection*{I.5.4} \textit{What are initial and final objects in the category of 'pointed sets' (Example 3.8)?  Are they unique?} \\
+
+\noindent \textbf{Solution: } Singleton pairs $(\{a\},a)$ are initial objects of the category of pointed sets.  Let $(Z,z)$ be an arbitrary set-element pair object of the pointed-set category.  Then there exists only one function $\sigma:\{a\}\rightarrow Z$ defined by $\sigma(a) = z$.  Furthermore, non-singletons are not initial objects, for if $Z =\{0,1\}$ and $B$ has at least two elements, $b_1$ and $b_2$, we can consider, without loss of generality, the object $(B,b_1)$ in the pointed set category and consider morphisms in $\morph{\textsf{C}}{(B,b_1)}{(Z,0)}$.  Let $\sigma_1:B \rightarrow Z$ be defined such that $\sigma(b_1) = \sigma(b_2) = 0$, but let $\sigma_2(b_1) = 0$ while $\sigma(b_2) = 1$.  Both $\sigma_1$ and $\sigma_2$ are morphisms in $\morph{\textsf{C}}{(B,b_1)}{(Z,0)}$, but are distinct, hence non-singletons cannot be initial objects of the pointed set category. \\
+
+\noindent Singleton pairs are also the final objects of the pointed set category.  Given an arbitrary pair $(Z, z)$ there exists only one possible morphism $\sigma:(Z,a)\rightarrow (\{a\},a)$, namely the function $\sigma(z) = a$ for ALL $z \in Z$. If the pair is not a singleton pair, then there are more morphisms as in the case above, so singleton pairs are the unique final objects of the pointed-set class. $\square$
+
+\subsection*{I.5.5} \textit{What are the final objects of the category considered in section 5.3?}\\
+
+\noindent \textbf{Solution: } They are again singletons.  Consider the diagram:
+
+\begin{center}
+\begin{tikzcd}
+Z\arrow[rr,"\sigma"]&&F\\
+&A\arrow[ul, "\phi_1"]\arrow[ur,"\phi_2"']&
+\end{tikzcd}
+\end{center}
+
+\noindent and let $F = \{f\}$ be a singleton.  Then the only map $\phi_2: A \rightarrow F$ is $\phi_2(a) = f$ for all $a \in A$.  Similarly, the only map $\sigma:Z \rightarrow F$ is the map defined by $\sigma(z) = f$ for all $z \in Z$.  $\sigma \circ \phi_1 = \phi_2$, so the diagram commutes.  Since $\sigma$ is unique for a given set $Z$, the pair $(F, \phi_2)$ is a final object of $A$ and singletons are final objects of this category. $\square$
+
+\subsection*{I.5.6} \textit{Consider the category corresponding to endowing (as in Example 3.3) the set $\mathbb{Z}^+$ of positive integers with the divisibility relation.  Thus there is exactly one morphism $d \rightarrow m$ in this category if and only if $d$ divides $m$ without remainder; there is no morphism between $d$ and $m$ otherwise.  Show that this category has products and coproducts.  What are their 'conventional' names?} \\
+
+\noindent \textbf{Solution: }  For products, we insist that for all $a,b \in \mathbb{Z}^+$, that the category $\textsf{C}_{a,b}$ has final objects.  In the category $\textsf{C}{a,b}$, the morphisms are diagrams:
+
+\begin{center}
+\begin{tikzcd}
+&a\\
+z\arrow[ur, "f"]\arrow[dr, "g"']&\\
+&b
+\end{tikzcd}
+\end{center}
+
+\noindent In other words, $z \in \mathbb{Z}^+$ such that $z|a$ and $z|b$.  If $\textsf{C}_{a,b}$ has final objects, then the diagram:
+
+ \begin{center}
+\begin{tikzcd}
+&&a\\
+z\arrow[r, "\sigma"]\arrow[urr, bend left, "f_1"]\arrow[drr, bend right, "f_2"']& a \times b \arrow[ur, "f"]\arrow[dr, "g"']& \\
+&&b
+\end{tikzcd}
+\end{center} 
+
+\noindent commutes with a unique morphism $\sigma$ for all $z \in \mathbb{Z}^+$.  In particular, this implies that $a \times b \in \mathbb{Z}^+$, that $a \times b$ divides both $a$ and $b$, and that for every $z \in \mathbb{Z}^+$ such that $z|(a\times b)$, $z|a$ and $z|b$.  This means that $a \times b$ precisely meets the definition of the \textbf{greatest common denominator of a and b}, or $\text{gcd}(a,b)$. \\
+
+\noindent Similarly, the existence of coproducts in this category is contingent upon the existence of initial objects in the category $\textsf{C}^{a,b}$ for all $a,b \in \mathbb{Z}^+$.  In this category, the objects are the morphism diagrams:
+
+\begin{center}
+\begin{tikzcd}
+a\arrow[dr,"f_A"]&\\
+&z\\
+b\arrow[ur, "f_B"']
+\end{tikzcd}
+\end{center}
+ 
+\noindent In other words, $z \in \mathbb{Z}^+$ such that $a|z$ and $b|z$.  Then a morphism in $\textsf{C}^{a,b}$ with a final object (the coproduct) is diagramatically represented by:
+
+\begin{center}
+\begin{tikzcd}
+a \arrow[dr, "f"]\arrow[drr, bend left, "f_A"]&&\\
+& a \amalg b \arrow[r,"\sigma"]& z\\
+b \arrow[ur, "g"'] \arrow[urr, bend right, "f_B"']&&
+\end{tikzcd}
+\end{center}
+
+\noindent In other words, for every $z \in \mathbb{Z}^+$ such that $a|z$ and $b|z$, there exists a unique $a \amalg b \in \mathbb{Z}^+$ such that $a|(a \amalg b)$, $b|a \amalg b$, and $(a \amalg b)|z$.  This is precisely the \textbf{least common denominator of a and b}, or $\text{lcd}(a,b)$.
+
+\subsection*{I.5.7} \textit{Redo Exercise 2.9, this time using Proposition 5.4}\\
+
+\noindent \textbf{Solution: }Exercise 2.9 asks us to show that the operation $A \amalg B$ is well-defined up to isomorphism.  This almost immediately follows from Proposition 5.4, which states that all initial and final objects of categories are isomorphic to one another.  Since $A \amalg B$ is an initial object of the category $\textsf{C}^{A,B}$, it is isomorphic to any other initial object of this category, hence isomorphic to any other coproduct of the category.
+
+\subsection*{I.5.8} \textit{Show that in every category $\textsf{C}$ the products $A \times B$ and $B \times A$ are isomorphic.}\\
+
+\noindent \textbf{Solution: } By definition, both products are final objects of $\textsf{C}_{A,B}$ as $\textsf{C}_{A,B} = \textsf{C}_{B,A}$, and hence are isomorphic by Proposition 5.4. $\square$
+
+\subsubsection*{I.5.9} \textit{Let $\textsf{C}$ be a category with products.  Find a reasonable candidate for the universal property that the product $A \times B \times C$ of three objects of $\textsf{C}$ ought to satisfy, and prove that both $(A \times B) \times C$ and $A \times (B \times C)$ satisfy this universal property.  Deduce that $(A \times B) \times C$ and $A \times (B \times C)$ are necessarily isomorphic.} \\
+
+\noindent \textbf{Solution: } Let $\textsf{C}_{A,B,C}$ denote the category whose objects are the three morphisms in $\textsf{C}$ from a single object $Z$ to $A,B$ and $C$, denoted diagramatically by:
+
+\begin{center}
+\begin{tikzcd}
+&A\\
+Z\arrow[ur, "f_A"]\arrow[r, "f_B"]\arrow[dr,"f_C"']&B\\
+&C
+\end{tikzcd}
+\end{center}
+
+\noindent whose morphisms in $\morph{\textsf{C}_{A,B,C}}{Z_1}{Z_2}$ correspond to morphisms $\sigma \in \morph{\textsf{C}}{Z_1}{Z_2}$, such that the following diagram commutes:
+
+\begin{center}
+\begin{tikzcd}
+&&A\\
+Z_1\arrow[r, "\sigma"]\arrow[urr, bend left, "g_A"]\arrow[rr, bend right ,"g_B"]\arrow[drr, bend right,"g_C"']&Z_2\arrow[ur, "f_A"]\arrow[r, "f_B"]\arrow[dr,"f_C"']&B\\
+&&C
+\end{tikzcd}
+\end{center}
+
+\noindent and $A \times B \times C$ is an object in $\textsf{C}_{A,B,C}$ together with morphisms $\pi'_A$, $\pi'_B$, $\pi'_C$ such that for every object $Z$ of $\textsf{C}_{A,B,C}$, there is a unique $\sigma \in \morph{\textsf{C}_{A,B,C}}{Z}{A \times B \times C}$ the following diagram commutes: \\
+
+\begin{center}
+\begin{tikzcd}
+&&A\\
+Z_1\arrow[r, "\sigma"]\arrow[urr, bend left, "g_A"]\arrow[rr, bend right ,"g_B"]\arrow[drr, bend right,"g_C"']&A \times B \times C\arrow[ur, "\pi'_A"]\arrow[r, "\pi'_B"]\arrow[dr,"\pi'_C"']&B\\
+&&C
+\end{tikzcd}
+\end{center}
+
+
+\noindent \textbf{Proof of Theorem:} (i) For arbitrary $Z$ there exists a unique morphism $\sigma$ such that the following diagram commutes:
+
+\begin{center}
+\begin{tikzcd}
+&&A\\
+Z \arrow[r, "\sigma"] \arrow[urr, bend left, "g_A"] \arrow[drr, bend right, "g_B"']& A \times B \arrow[ur, "\pi_A"] \arrow[dr, "\pi_B"'] & \\
+&&B
+\end{tikzcd}
+\end{center}
+
+\noindent In other words $\pi_A \sigma = g_a$ and $\pi_B \sigma = g_b$.  Finally, by the definition of $(A \times B) \times C$ there exists a unique morphism $\sigma '$ such that the following diagram commutes:
+
+\begin{center}
+\begin{tikzcd}
+&&A \times B\\
+Z \arrow[r, "\sigma'"] \arrow[urr, bend left, "\sigma"] \arrow[drr, bend right, "g_C"']&(A \times B) \times C \arrow[ur, "\pi'_{A \times B}"] \arrow[dr, "\pi'_C"'] & \\
+&&C
+\end{tikzcd}
+\end{center}
+
+\noindent Notice then, that by combining the previous two diagrams, this means $\sigma'$ is the unique morphism such that the below diagram commutes:
+
+\begin{center}
+\begin{tikzcd}
+&&&A \\
+&&A \times B \arrow[ur, "\pi_A"]\arrow[dr, "\pi_B"']& \\
+Z \arrow[r, "\sigma'"] \arrow[urr, bend left, "\sigma"] \arrow[drr, bend right, "g_C"'] \arrow[uurrr, bend left, "g_A"]\arrow[rrr, bend right, "g_B"']&(A \times B) \times C \arrow[ur, "\pi'_{A \times B}"] \arrow[dr, "\pi'_C"'] && B\\
+&&C&
+\end{tikzcd}
+\end{center}
+
+\noindent This immediately implies that $\sigma'$ is the unique morphism for which the following diagram of $\textsf{C}_{A,B,C}$ commutes:
+
+\begin{center}
+\begin{tikzcd}
+&&A \\
+Z \arrow[r, "\sigma"]\arrow[urr, bend left, "g_A"] \arrow[rr, bend right, "g_B"] \arrow[drr, bend right, "g_B"']&(A \times B) \times C \arrow[ur, "\pi'_A"] \arrow[r, "\pi'_B"] \arrow[dr, "\pi'_C"']& B\\
+&&C
+\end{tikzcd}
+\end{center}
+
+\noindent where $\pi'_A = \pi'_A \circ \pi'_{A \times B}$ and $\pi'_B = \pi'_B \circ \pi'_{A \times B}$. $\square$
+
+\subsection*{I.5.10} \textit{Push the envelope a little further still, and define products and coproducts for families (i.e., indexed sets) of objects of a category.  Do these exist in $\textsf{Set}$?} \\
+
+\noindent \textbf{Solution: } Let $\{A_i\}$ where $i \in \Lambda$ (some indexing set).  Expanding on the generalization above, define the category $\textsf{C}_{\Lambda}$ whose objects consist of a set in $S$ together with, for all $i \in \Lambda$ a single morphism $S_i \in \morph{\textsf{Set}}{S}{A_i}$.  The morphisms of $\textsf{C}_{\Lambda}$ correspond to the morphisms $\sigma \in \morph{\textsf{Set}}{Z}{S}$ such that $Z_i = \sigma S_i$ (corresponding to the commuting of an arbitrary indexed diagram) for all $i \in \Lambda$. $\square$
+
+\subsection*{I.5.11} \textit{Let $A$ resp. $B$ be a set, endowed with an equivalence relation $\sim_A$, resp. $\sim_B$.  Define a relation $\sim$ on $A \times B$ by setting}
+
+$$(a_1,b_1) \sim (a_2,b_2) \iff a_1 \sim_A a_2 \text{ and } b_1 \sim_B b_2.$$
+
+\noindent \textit{(This is immediately seen to be an equivalence relation).} \\
+
+\noindent \textit{Use the universal property for quotients (section 5.3) to establish that there are functions $(A \times B)/\sim \rightarrow A / \sim_A$, $(A \times B)/\sim \rightarrow B /\sim_B$.} \\
+
+\noindent \textbf{Solution: } We prove without loss of generality that there exists a function from $A \times B$ to $A / \sim_{A}$.  The case for $B$ is conceptually identical. There exists a function, the natural projection, $\pi_A: A \times B \rightarrow A$.  There exists a function, the canonical projection, $\pi_{\sim_A}: A \rightarrow A / \sim_A$.  By taking the composition of these functions, we obtain a map $\phi_A = \pi_{\sim_A} \circ \pi_A : A \times B \rightarrow A / \sim_{A}$.  There also exists a map, the canonical projection $\pi_{\sim}: A \times B \rightarrow A \times B / \sim$. \\
+
+\noindent Because $A \times B / \sim$ is an initial object of $\textsf{Set}_{A,B}$, there exists a unique map $\bar{phi_a}$ such that the following diagram commutes:
+
+\begin{center}
+\begin{tikzcd}
+A \times B / \sim \arrow[rr, "\overbar{\phi_A}"]& &A / \sim_A \\
+& A \times B \arrow[ul, "\pi_\sim"] \arrow[ur, "\phi_A = \pi_{\sim_A} \circ \pi_A"']&
+\end{tikzcd}
+\end{center}
+
+\noindent Hence, there exists a function $\overbar{\phi_A}$ from $A \times B / \sim$ to $A / \sim_A$.  The argument for the existence of a function $\overbar{\phi_B}: A \times B / \sim \rightarrow B / \sim_B$ is identical. $\square$ \\
+
+\noindent \textit{Prove that $(A \times B)/ \sim$, with these two functions, satisfies the universal property for the product of $A / \sim_A$ and $B / \sim_B$}. \\
+
+\noindent \textbf{Solution: } Let $Z$ with the following diagram be an object in $\textsf{Set}_{A,B}$:
+
+\begin{center}
+\begin{tikzcd}
+&A / \sim_A\\
+Z\arrow[ur, "f_A"]\arrow[dr, "f_B"']&\\
+&B / \sim_B
+\end{tikzcd}
+\end{center}
+
+\noindent Define $h_A: Z \rightarrow A$ by setting $h_A(z) = a$ for some $a \in f_A(z)$ and $h_B: Z \rightarrow A$ by $h_B(z) = b$ for some $b \in f_B(z)$.  Then $\pi_{\sim_A} \circ h_A = f_A$, similarly for $f_B$.  Since $A \times B$ is a final object of $\textsf{Set}_{A,B}$, there exists a unique function $\sigma$ such that the following diagram commutes: 
+
+\begin{center}
+\begin{tikzcd}
+&&A\\
+Z \arrow[r, "\sigma"]\arrow[urr, bend left,  "h_A"]\arrow[drr, bend right, "h_B"']& A \times B \arrow[ur, "\pi_A"] \arrow[dr, "\pi_B"']& \\
+&&B
+\end{tikzcd}
+\end{center}
+
+\noindent Let $\lambda = \pi_{\sim} \circ \sigma$.  Let $\overbar{\phi_A}$ and $\overbar{\phi_B}$ be defined as above.  I claim that $\lambda$ is the unique function for which the following diagram commutes:
+
+\begin{center}
+\begin{tikzcd}
+&&A / \sim_A\\
+Z \arrow[r, "\lambda"]\arrow[urr, bend left,  "f_A"]\arrow[drr, bend right, "f_B"']& A \times B / \sim\arrow[ur, "\overbar{\phi}_A"] \arrow[dr, "\overbar{\phi}_B"']& \\
+&&B / \sim_A
+\end{tikzcd}
+\end{center}
+
+\noindent \textit{(Proof that $\lambda$ makes the diagram commute)} We need to prove: 
+
+\begin{align*}
+f_A &= \overbar{\phi_A} \circ \lambda \\
+f_B &= \overbar{\phi_B} \circ \lambda
+\end{align*}
+
+\noindent Without loss of generality, we prove the case for $f_A$, and the proof for $f_B$ is identical.  Note, that by definition, $\overbar{\phi_A} \circ \pi_{\sim} = \pi_{\sim_A} \circ \pi_A$.  Since $\lambda  = \pi_{\sim} \circ \sigma$, we have:
+
+$$\overbar{\phi_A} \circ \lambda = \overbar{\phi_A} \circ \pi_{\sim} \circ \sigma = \pi_{\sim_A} \circ \pi_A \circ \sigma = \pi_{\sim_A} \circ h_A = f_A$$.
+
+\noindent  The proof for $f_B$ is identical.  Hence $\lambda$ makes the above diagram commute. \\
+
+\noindent \textit{(Proof that $\lambda$ is unique:)} Every assertion about $A$ subscripted variables are true for the $B$ subscripted variables. Suppose there exists another function $\lambda_0$, for which the above diagram commutes.  That is, $\lambda_0 \neq \lambda$ and $\overbar{\phi_A} \circ \lambda_0 = \overbar{\phi_A} \lambda$.  Since $\lambda_0 \neq \lambda$, there exists some $z \in Z$ such that $\lambda_0(z) \neq \lambda(z)$.  Note, that since $\bar{\phi_A} \pi_{\sim} = \pi_{\sim_A} \circ \pi_A$, and since $\pi_{\sim}$ is a surjective projection function that then necessarily has a right inverse, we have $\bar{\phi_A} = \pi_{\sim_A}\pi_A\pi_{\sim}^-1$.  Let $\lambda_0(z) = [(a_0,b_0)]_{\sim}$ and $\lambda_0(z) = [(a,b)]_{\sim}$. We have $\pi_{\sim}^-1(\lambda_0(z)) = (a_0^*, b_0^*)$ for some $(a_0^*, b_0^*) \in [(a_0,b_0)]_{\sim}$; and $\pi_{\sim}^-1(\lambda(z)) = (a^*, b^*)$ for some $(a^*, b^*) \in [(a,b)]_{\sim}$.  Since they are distinct equivalence classes, $[(a_0,b_0)]_{\sim} \cap [(a,b)]_{\sim} = \varnothing$.  In particular, $(a_0, b_0) \cancel{\sim} (a,b)$.  By the definition of $\sim$, we have either $a_0 \cancel{\sim}_A a$ or $b_0 \cancel{\sim}_B b$.  Suppose without loss of generality that it is the former. Since $a_0 \neq a$, we then have $a_0 = \pi_A \circ \pi_{\sim}^-1 \circ \lambda_0(z) \neq \pi_A \circ \pi_{\sim}^-1 \circ \lambda(z) = a$.  Then, since $a_0 \cancel{\sim}_A a$, we have $\pi_{\sim_A}(a_0) = \pi_{\sim_A} \circ \pi_A \circ \pi_{\sim}^-1 \circ \lambda_0(z) = \overbar{\phi_A} \circ \lambda_0(z)  \neq \overbar{\phi_A} \circ \lambda(z) = \pi_A \circ \pi_{\sim}^-1 \circ \lambda(z) = \pi_{\sim_A}(a)$.  In particular, notice $\overbar{\phi_A} \circ \lambda_0(z)  \neq \overbar{\phi_A} \circ \lambda(z)$, directly contradicting our hypothesis about $\lambda_0$.  Hence, no such $\lambda_0$ exists and $\lambda$ is unique.  \\
+
+\noindent Since there exists a unique $\lambda$ for which the above diagram commutes, this shows that $(A \times B) / \sim$ equipped with functions $\overbar{\phi_A}$ and $\overbar{\phi_B}$ a final object of the category $\textsf{Set}{A,B}$. $\square$ \\
+
+\noindent \textit{Conclude, without further work that $(A \times B) / \sim  \cong (A / \sim_A) \times (B / \sim_B)$.} \\
+
+\noindent From Proposition 5.4, since $(A \times B) / \sim $ and $(A / \sim_A) \times (B / \sim_B)$ are both final objects of the category $\textsf{Set}_{A,B}$, they are isomorphic in $\textsf{Set}_{A,B}$, which means they are also isomorphic in $\textsf{Set}$. $\square$
+
+\subsection*{I.5.12} \textit{Define the notions of fibered products and fibered coproducts as terminal objects of the categories $\textsf{C}_{\alpha, \beta}$, $\textsf{C}^{\alpha,\beta}$ considered in Example 3.10 (cf. also Exercise 3.11), by stating carefully the corresponding universal properties.} \\
+
+\noindent \textbf{Solution: } An object $(A \times B)_{\alpha,\beta}$ of a category $\textsf{C}$ is a \textit{fibered product} of $A$ and $B$ with respect to morphisms $\alpha \in \morph{\textsf{C}}{A}{C}$ and $\beta \in \morph{\textsf{C}}{B}{C}$ if it is a final object in the fibered category $\textsf{C}_{\alpha, \beta}$.  In other words, there exists a unique morphism $\sigma$ such that for any object $(Z, f_A, f_B) \in \text{Obj}(\textsf{C}_{\alpha,\beta})$, the following diagram commutes:
+
+
+\begin{center}
+\begin{tikzcd}
+&&A \arrow[dr, "\alpha"]&\\
+Z \arrow[r, "\sigma"] \arrow[urr, bend left, "f_A"] \arrow[drr, bend right, "f_B"']& (A \times B)_{\alpha,\beta} \arrow[ur, "\pi^{\alpha,\beta}_A"] \arrow[dr, "\pi^{\alpha,\beta}_B"'] && C \\
+&&B \arrow[ur, "\beta"']&
+\end{tikzcd}
+\end{center}
+
+\noindent Similarly, an object $(A \coprod B)^{\alpha,\beta}$ of a category $\textsf{C}$ with morphisms $i_A \in \morph{\textsf{C}}{A}{(A \coprod B)^{\alpha,\beta}}$ and $i_B \in \morph{\textsf{C}}{B}{(A \coprod B)^{\alpha,\beta}}$ is a \textit{fibered coproduct} of $A$ and $B$ with respect to morphisms $\alpha \in \morph{\textsf{C}}{A}{C}$ and $\beta \in \morph{\textsf{C}}{B}{C}$ if it is an f object in the fibered category $\textsf{C}^{\alpha, \beta}$.  In other words there exists a unique morphism $\sigma$ such that the following diagram commutes:
+
+\begin{center}
+\begin{tikzcd}
+   &&A \arrow[dl,"i_A"']\arrow[dll, bend right, "f_A"']\\
+Z&(A \coprod B)^{\alpha,\beta}\arrow[l,"\sigma"']&&C\arrow[ul, "\alpha"']\arrow[dl, "\beta"]\\
+   &&B\arrow[ul, "i_B"]\arrow[ull, bend left, "f_B"]
+\end{tikzcd}
+\end{center}
+
+\noindent \textit{(Proof that $\textsf{Set}$ has fibered products)}  We first need the following lemma: if $\textsf{C}_{\alpha, \beta}$ has objects, then there is at least one $(a_0, b_0) \in A \times B$ such that $\alpha(a_0) = \beta(b_0)$.  If $(Z_0, f_A, f_B) \in \textsf{C}_{\alpha, \beta}$, then for all $z \in Z_0$ we have $\alpha(f_A(z)) = \beta(f_B(z))$.  With $a_0 = f_A(z)$ and $b_0 = f_B(z)$, the lemma is obvious. \\
+
+\noindent Consider the maps $\pi^{\alpha,\beta}_A: A \times B \rightarrow A$ and $\pi^{\alpha,\beta}_B: A \times B \rightarrow B$ defined by:
+
+\[\pi^{\alpha,\beta}_A((a,b)) =   \left\{
+\begin{array}{ll}
+      a_0, & \alpha(a) \neq \beta(b)  \\
+      a, & \alpha(a) = \beta(b) \\
+\end{array} 
+\right. \]
+
+\[\pi^{\alpha,\beta}_B((a,b)) =   \left\{
+\begin{array}{ll}
+      b_0, & \alpha(a) \neq \beta(b)  \\
+      b, & \alpha(a) = \beta(b) \\
+\end{array} 
+\right. \]
+
+
+
+\noindent  Then $\alpha \circ \pi^{\alpha,\beta}_A = \beta \circ \pi^{\alpha,\beta}_B$ Let $\sigma: Z \rightarrow A \times B$ be defined by $\sigma(z) = (f_A(z), f_B(z))$.  Note that $\pi^{\alpha, \beta}_A(\sigma(z)) = \pi^{\alpha, \beta}_A(f_A(z)) = f_A(z)$, since $\alpha \circ f_A = \beta \circ f_B$. Then these functions make the above diagram for $\textsf{C}_{\alpha, \beta}$ commute.  If another $\sigma_0$ made this diagram commute, then $A \times B$ with $pi_A$ and $pi_B$ would not be a final object of $\textsf{Set}_{A,B}$, contradicting Proposition 5.6.  Hence, $\textsl{Set}$ has fibered products $\square$ \\
+
+\noindent \textit{(Proof that $\textsf{Set}$ has fibered coproducts)} This proof is pretty much identical to the proof that $\textsf{Set}$ has fibered products. $\square$ 
+
+\newpage
+
+\section*{II.1: Definition of group}
+
+\subsection*{II.1.1} \textit{Write a careful proof that every group is the group of isomorphisms of a groupoid.  In particular, every group is the group of automorphisms of some object in some category.} \\
+
+\noindent \textbf{Solution:} Let $(G, \bullet)$ be a group.  Define a category $\textsf{C}$ such that $\bullet$ is the only object and the morphisms are defined as all $f \in G$.  Define composition, then by $f \circ g = f \bullet g$.  By definition, associativity and the existence of an inverse (simply the inverse of the group) such that composition of the inverse is an identity are satisfied.  All objects are in $\text{Aut}(\bullet,\bullet)$. $\square$ 
+
+\subsection*{II.1.2} \textit{Consider the 'sets of numbers' listed in $\mathsection$ 1.1 and decide which are made into groups by conventional oeprations such as $+$ and $\cdot$.  Even if the answer is negative (for example, $(\mathbb{R}, \cdot)$ is not a group), see if variations on the definition of these sets lead to groups (for example, $(\mathbb{R}^*, \cdot)$ is a group).} \\
+
+\noindent \textbf{Solution: } $(\mathbb{Z}^+, +)$ is a group.  The operation $+$ is associative, the identity is $0$.  And the inverse of $n \in \mathbb{Z}$ is $-n \in \mathbb{Z}$. It is quite obvious, along the same lines of reasoning, that all of the additive groups $(\mathbb{Q}, +),(\mathbb{R},+),(\mathbb{C},+)$. Both $\mathbb{Q}/\{0\}$ and $\mathbb{R}/\{0\}$ are groups, since every element but $0$ in $\mathbb{Q}$ and $\mathbb{R}$ have inverses.  Similarly with  $\mathbb{C}$. $\square$ 
+
+\subsection*{II.1.3} \textit{Prove that $(gh)^{-1}=h^{-1}g^{-1}$ for all elements $g,h$ of a group $G$.}\\
+
+\noindent \textbf{Solution: } We simply note that $(gh)h^{-1}g^{-1}= g(hh^{-1}) g^{-1}= geg^{-1} = gg^{-1} = e$. $\square$
+
+\subsection*{II.1.4} \textit{Suppose that $g^2 = e$ for all elements $g$ of a group $G$; prove that $G$ is commutative.} \\
+
+\noindent \textbf{Solution: } Let $a,b \in G$, Then $abba = a(bb)a = aa = e = (ab)(ab)$, and from cancellation we immediately acquire $ab = ba$ . $\square$ 
+
+
+\end{document}
