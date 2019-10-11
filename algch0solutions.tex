@@ -267,7 +267,7 @@ $$(ih)(gf),\text{  }(i(hg))f,\text{  }i((hg)f),\text{  }\text{etc.}$$
 
 \subsection*{I.4.4}\textit{Prove that the composition of two monomorphisms is a monomorphim.  Deduce that one can define a subcategory $\textsf{C}_{\text{mono}}$ of a category $\textsf{C}$ by taking the same objects as in $\textsf{C}$ and defining $\morph{\textsf{C}_{\text{mono}}}{A}{B}$ to be the subset of $\morph{\textsf{C}}{A}{B}$ consisting of monomorphisms, for all objects $A,B$.  Do the same for epimorphisms. Can you define a subcategory $\textsf{C}_{\text{nonmono}}$ of $\textsf{C}$ by restricting to morphisms that are not monomorphisms?}\\
 
-\noindent\textbf{Solution: } To prove that the composition of two monomorphisms is a monomorphism, let $f, g$ be monomorphisms with $f \in \morph{\textsf{C}}{A}{B}$ and $g \in \morph{\textsf{C}}{B}{C}$.  Let $\alpha',\alpha'' \in \morph{\textsf{C}}{Z}{A}$ and suppose that $(gf)\alpha' = (gf)\alpha''$.  By the associativity of morphisms, this implies $g(f \alpha') =  g(f \alpha'')$.  Since $g$ is a monomorphism, this implies $f\alpha' = f\alpha''$.  Since $f$ is a monomorphism, $\alpha' = alpha''$.  Hence, it follows that $gf$ is a monomorphism, and compositions of monomorphisms are monomorphisms. One can define $\textsf{C}_{\text{mono}}$ is closed under morphism and therefore that this is a category.\\
+\noindent\textbf{Solution: } To prove that the composition of two monomorphisms is a monomorphism, let $f, g$ be monomorphisms with $f \in \morph{\textsf{C}}{A}{B}$ and $g \in \morph{\textsf{C}}{B}{C}$.  Let $\alpha',\alpha'' \in \morph{\textsf{C}}{Z}{A}$ and suppose that $(gf)\alpha' = (gf)\alpha''$.  By the associativity of morphisms, this implies $g(f \alpha') =  g(f \alpha'')$.  Since $g$ is a monomorphism, this implies $f\alpha' = f\alpha''$.  Since $f$ is a monomorphism, $\alpha' = \alpha''$.  Hence, it follows that $gf$ is a monomorphism, and compositions of monomorphisms are monomorphisms. One can define $\textsf{C}_{\text{mono}}$ is closed under morphism and therefore that this is a category.\\
 
 \noindent For epimorphisms, let $g$ and $f$ be as above, except they are epimorphisms.  Let $\beta', \beta'' \in \morph{\textsf{C}}{B}{Z}$ with $\beta'(gf) = \beta''(gf)$.  By associativity, we have $(\beta' g)f = (\beta'' g)f$.  Since $f$ is an epimorphism, we have $\beta' g = \beta'' g$, and since $g$ is an epimorphism $\beta' = \beta''$ and so compositions of epimorphisms are epimorphisms and a corresponding category can be defined. \\
 
@@ -588,5 +588,54 @@ Z&(A \coprod B)^{\alpha,\beta}\arrow[l,"\sigma"']&&C\arrow[ul, "\alpha"']\arrow[
 
 \noindent \textbf{Solution: } Let $a,b \in G$, Then $abba = a(bb)a = aa = e = (ab)(ab)$, and from cancellation we immediately acquire $ab = ba$ . $\square$ 
 
+\subsection*{II.1.5} \textit{The 'multiplication table' of a group is an array compiling the results of all multiplications $g \bullet f$.}
+
+
+\begin{center}
+\begin{tabular}{c||c|c|c|c}
+	$\bullet$ & $e$ & ... & $h$ & ... \\ \hline \hline
+	$e$ & $e$ & ... & $h$ & ... \\ \hline
+	... & ... &... &... &... \\ \hline
+	$g$ & $g$ & ... & $g \bullet h$ & ... \\ \hline
+	... & ... &... &... &... \\
+\end{tabular}
+\end{center}
+
+\noindent\textit{Prove that every row and every column of the multiplication table of a group contains all elements of the group exactly once.}\\
+
+\noindent \textbf{Solution:} Stating that every row of the multiplication table contains all elements of the group exactly once is equivalent to saying that for all $g \in G$, for all $f \in G$, there exists some $x \in G$ such that $gx = f$. Furthermore, if $gx_1 = f$ and $gx_2 = f$, then $x_1 = x_2$.  For columns, for all $g \in G$, for all $f \in G$, there exists some $y \in G$ such that $yg = f$. Furthermore, if $y_1g = f$ and $y_2g = f$, then $y_1 = y_2$. \\
+
+\noindent To prove both of the above, not existence is proven by taking $x = g^{-1}f$ and $y = fg^{-1}$ above.  Uniqueness is proven by Proposition 1.8 (the cancellation property of groups). $\square$
+
+\subsection*{II.1.6} \textit{Prove that there is only one possible multiplication table for $G$ if $G$ has exactly 1,2, or 3 elements.  Analyze the possible multiplication tables for groups with exactly 4 elements, and show that there are two distinct tables, up to reordering the elements of $G$.  Use these tables to prove that all groups with $\leq 4$ elements are commutative.}\\
+
+\noindent \textbf{Solution:} It is obvious that there is only one possible multiplication table for one elements.  For two elements, one is the identity $e$, call the other $a$.  We then automatically have $ae = ea = a$ and from the exercise II.1.5 we acquire $aa = ee = e$.  For three elements, we have the identity $e$and two other elements, $a$ and $b$.  Multiplication by identity is obvious, so we need only work out the $a$ and $b$ multiplication table.  If $a^2 = a$, we would have a contradiction since then $a = e$, but they are distinct. If $a^2 = e$, then by II.1.5, we must have $ab = b$, another contradiction since it too implies $a = e$. Hence $a^2 = b$ and by similar reasoning $b^2 = a$, with $ab = ba = e$. \\
+
+\noindent For four elements, there is only one way to multiply by $e$ ($a,b,c$ being the other three elements). For the reasons given above, we cannot have $g^2 = g$ for any $g \in G$ except for $e$. For $a$ we can have either $a^2 = b$ or $a^2 = c$.  If $a^2 = b$, we cannot have $ab = e$, since from the previous exercise we would then have $ac = c$, implying $a = e$ (a contradiction), hence $ab = c$, so that $ac = e$.  Next, suppose $ba = e$. Then $b^2 = a$ or $bc = a$.  If $bc = a$, since $ac = c$ and $bc = a$, we would have $c^2 = c$, impossible, so it would be the case that $b^2 = a$, but then $bc = b$, a contradiction, hence we must have $ba = c$.  Since $ac = e$, we must have $bc = a$, hence $b^2 = e$.  For $c$, this leaves only $ca = e$, $cb = a$, and $c^2$ = b.  Taking $a^2 = c$ gives the second valid multiplication table. $\square$ \\ 
+
+\subsection*{II.1.7} \textit{Prove Corollary 1.11 For reference, the statement of Corollary 1.11 is the following:  Let $g$ be an element of finite order, and let $N \in \mathbb{Z}$. Then:}
+
+\begin{center}
+	$g^N = e \iff N$ \textit{is a multiple of} $\abs{g}$.
+\end{center}
+
+\noindent \textbf{Solution: }$\implies$) The forward assertion immediately follows from Lemma 1.10. \\
+\noindent $\impliedby$) Suppose $N$ is a multiple of $\abs{g}$, so that $N = k\abs{g}$ for some $k \in \mathbb{Z}$. Then, $g^N = g^{k\abs{g}} = (g^{\abs{g}})^{k} = e^k = e$. $\square$ \\
+
+\subsection*{II.1.8} \textit{Let $G$ be a finite abelian group with exactly one element $f$ of order 2.  Prove that  $\Pi_{g \in G}g = f$.} \\
+
+\noindent \textbf{Solution: } Let $G$ be such a finite abelia group, consisting of $e$, $f$, and the set $\{g_1, g_2, ... , g_k\}$ of all elements of $G$ not equal to the identity $e$ or $f$. For $1 \leq i \leq k$, $g_i^{-1}$ must be $g_j$ for $j \neq i$. $g_i^{-1}$ cannot be $e$ because it is not the identity and it cannot be $g_i$ since it is not $f$, the only element of order 2 in the group.  Note that $\Pi_{g \in G}g = eg_1g_2...g_kf = g_1g_2...g_kf$.  Since $G$ is abelian, we can rearrange the initial product of the $g_i$'s to acquire $\Pi_{g \in G}g = (g_1g_1^{-1})...(g_kg_k^{-1})f = ef = f$. $\square$ 
+
+\subsection*{II.1.9} \textit{Let $G$ be a finite group, of order $n$, and let $m$ be the number of elements $g \in G$ of order exactly 2.  Prove that $n-m$ is odd.  Deduce that if $n$ is even, then $G$ necessarily contains elements of order 2.} \\
+
+\noindent \textbf{Solution: } Let $F \subset G$ be all of the elements of $G$ which are of order 2. Let $A = G/ (F \cup \{e\})$ Then $\abs{A} = n - m - 1$.  If $g \in A$ then $g^{-1}$ cannot be in $F$, since elements in $F$ are their own inverses and then $g$ would have order two and so not be in $A$ by definition, and $g^{-1} \neq e$ since otherwise $g = e$, also prohibited by the definition of $A$.  $g \neq g^{-1}$ for any $g$ in $A$ since otherwise $\abs{g} = 2$.  Thus, for each $g \in A$ there exists a unique $g^{-1} \neq g \in A$ which is it's inverse.  It follows that $A$ has an even number of elements, so that $n-m-1$ is even, hence $n - m$ is odd.  If $n$ is even, then $m = 0$ would imply that $n-m = n$ is even, a contradiction to our previously established statement that $n-m$ is odd . $\square$ 
+
+\subsection*{II.1.10} \textit{Suppose that the order of $g$ is odd.  What can you say about the order of $g^2$?} \\
+
+\noindent \textbf{Solution:} By Proposition 1.13, we have $\abs{g^2} = \frac{\abs{g}}{\text{gcd}(2, \abs{g})} = \abs{g}$ since $\text{gcd}(2, m) = 1$ for any odd $m$. $\square$ \\
+
+\subsection*{II.1.11} \textit{Prove that for all $g, h$ in a group $G$, $\abs{gh} = \abs{hg}$.  Hint: Prove that $\abs{aga^{-1}} = \abs{g}$ for all $a, g \in G$.} \\
+
+\noindent \textbf{Solution: }  By a simple inductive argument, it is easy to prove that $(aga^{-1})^n = ag^na^{-1}$.  Hence, $(aga^{-1})^{\abs{g}} = ag^{\abs{g}}a^{-1} = aa^{-1} = e$.  If $(aga^{-1})^n = ag^na^{-1} =  e$ for some $n < \abs{g}$, we would acquire $g^n = e$, a contradiction.  Hence $\abs{aga^{-1}} = \abs{g}$. Hence, it follows that $\abs{gh} = \abs{h(gh)h^{-1}} = \abs{hg}$. $\square$ 
 
 \end{document}
