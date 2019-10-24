@@ -564,7 +564,7 @@ Z&(A \coprod B)^{\alpha,\beta}\arrow[l,"\sigma"']&&C\arrow[ul, "\alpha"']\arrow[
 
 
 
-\noindent  Then $\alpha \circ \pi^{\alpha,\beta}_A = \beta \circ \pi^{\alpha,\beta}_B$ Let $\sigma: Z \rightarrow A \times B$ be defined by $\sigma(z) = (f_A(z), f_B(z))$.  Note that $\pi^{\alpha, \beta}_A(\sigma(z)) = \pi^{\alpha, \beta}_A(f_A(z)) = f_A(z)$, since $\alpha \circ f_A = \beta \circ f_B$. Then these functions make the above diagram for $\textsf{C}_{\alpha, \beta}$ commute.  If another $\sigma_0$ made this diagram commute, then $A \times B$ with $pi_A$ and $pi_B$ would not be a final object of $\textsf{Set}_{A,B}$, contradicting Proposition 5.6.  Hence, $\textsl{Set}$ has fibered products $\square$ \\
+\noindent  Then $\alpha \circ \pi^{\alpha,\beta}_A = \beta \circ \pi^{\alpha,\beta}_B$ Let $\sigma: Z \rightarrow A \times B$ be defined by $\sigma(z) = (f_A(z), f_B(z))$.  Note that $\pi^{\alpha, \beta}_A(\sigma(z)) = \pi^{\alpha, \beta}_A(f_A(z)) = f_A(z)$, since $\alpha \circ f_A = \beta \circ f_B$. Then these functions make the above diagram for $\textsf{C}_{\alpha, \beta}$ commute.  If another $\sigma_0$ made this diagram commute, then $A \times B$ with $\pi_A$ and $\pi_B$ would not be a final object of $\textsf{Set}_{A,B}$, contradicting Proposition 5.6.  Hence, $\textsl{Set}$ has fibered products $\square$ \\
 
 \noindent \textit{(Proof that $\textsf{Set}$ has fibered coproducts)} This proof is pretty much identical to the proof that $\textsf{Set}$ has fibered products. $\square$ 
 
@@ -637,5 +637,110 @@ Z&(A \coprod B)^{\alpha,\beta}\arrow[l,"\sigma"']&&C\arrow[ul, "\alpha"']\arrow[
 \subsection*{II.1.11} \textit{Prove that for all $g, h$ in a group $G$, $\abs{gh} = \abs{hg}$.  Hint: Prove that $\abs{aga^{-1}} = \abs{g}$ for all $a, g \in G$.} \\
 
 \noindent \textbf{Solution: }  By a simple inductive argument, it is easy to prove that $(aga^{-1})^n = ag^na^{-1}$.  Hence, $(aga^{-1})^{\abs{g}} = ag^{\abs{g}}a^{-1} = aa^{-1} = e$.  If $(aga^{-1})^n = ag^na^{-1} =  e$ for some $n < \abs{g}$, we would acquire $g^n = e$, a contradiction.  Hence $\abs{aga^{-1}} = \abs{g}$. Hence, it follows that $\abs{gh} = \abs{h(gh)h^{-1}} = \abs{hg}$. $\square$ 
+\subsection*{II.1.12} \textit{In the group of invertible $2 \times 2$ matrices, consider:}
+
+\begin{align*}
+g = 
+\begin{pmatrix}
+0 & -1 \\
+1 & 0
+\end{pmatrix}
+, h =
+\begin{pmatrix}
+0 & 1 \\
+-1 & -1
+\end{pmatrix}
+\end{align*}
+
+\noindent Verify that $\abs{g} = 4$, $\abs{h} = 3$, and $\abs{gh} = \infty$. \\
+
+\noindent \textbf{Solution: } Computing the exponents of $g$:
+
+\begin{align*}
+g=
+\begin{pmatrix}
+0 & -1 \\
+1 & 0 
+\end{pmatrix}
+, g^2 =
+\begin{pmatrix}
+-1 & 0 \\
+0 & -1
+\end{pmatrix}
+, g^3 =
+\begin{pmatrix}
+0 & 1 \\
+-1 & 0 
+\end{pmatrix}
+, g^4 = 
+\begin{pmatrix}
+1 & 0 \\
+0 & 1
+\end{pmatrix}
+\end{align*}
+
+\noindent we see that $\abs{g} = 4$.  Computing the exponents of $h$ gives:
+
+\begin{align*}
+	h=
+	\begin{pmatrix}
+		0 & 1 \\
+		-1&-1
+	\end{pmatrix}
+	,h^2 = 
+	\begin{pmatrix}
+		-1 & -1 \\
+		1 & 0
+	\end{pmatrix}
+,h^3=
+	\begin{pmatrix}
+		1 & 0 \\
+		0 & 1
+	\end{pmatrix}
+\end{align*}
+from which we can see that $\abs{h}=3$.  Next, observe:
+
+\begin{align*}
+gh=
+	\begin{pmatrix}
+		1 & 1 \\
+		0 & 1
+	\end{pmatrix}
+\end{align*}
+
+\noindent and we observe the pattern: 
+
+\begin{align*}
+	(gh)^2=
+	\begin{pmatrix}
+		1 & 2 \\
+		0 & 1
+	\end{pmatrix}
+	(gh)^3=
+	\begin{pmatrix}
+		1 & 3 \\
+		0 & 1 
+	\end{pmatrix}
+\end{align*}
+
+\noindent We postulate that:
+
+\begin{align*}
+	(gh)^n=
+	\begin{pmatrix}
+		1 & n \\
+		0 & 1
+	\end{pmatrix}
+\end{align*}
+
+\noindent and it is quite easy to prove this using an inductive argument.  It follows that no integer power of $gh$is the identity element and hence $\abs{gh} = \infty$. $\square$
+
+\subsection*{II.1.13} \textit{Give an example showing that $\abs{gh}$ is not necessarily equal to $\text{lcm}(\abs{g},\abs{h})$}. \\
+
+\noindent \textbf{Solution:} The solution to II.1.13 demonstrates this.  In this problem, $\abs{gh} = \infty$ while $\text{lcm}(\abs{g}, \abs{h}) = 12$. $\square$
+
+\subsection*{II.1.14} \textit{As a counterpoint to Exercise 1.13, prove that if $g$ and $h$ commute and $\text{gcd}(\abs{g},\abs{h}) = 1$, then $\abs{gh} = \abs{g} \abs{h}$}. 
+
+
 
 \end{document}
