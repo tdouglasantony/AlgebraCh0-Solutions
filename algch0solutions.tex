@@ -739,8 +739,17 @@ gh=
 
 \noindent \textbf{Solution:} The solution to II.1.13 demonstrates this.  In this problem, $\abs{gh} = \infty$ while $\text{lcm}(\abs{g}, \abs{h}) = 12$. $\square$
 
-\subsection*{II.1.14} \textit{As a counterpoint to Exercise 1.13, prove that if $g$ and $h$ commute and $\text{gcd}(\abs{g},\abs{h}) = 1$, then $\abs{gh} = \abs{g} \abs{h}$}. 
+\subsection*{II.1.14} \textit{As a counterpoint to Exercise 1.13, prove that if $g$ and $h$ commute and $\text{gcd}(\abs{g},\abs{h}) = 1$, then $\abs{gh} = \abs{g} \abs{h}$}. \\ 
 
+\noindent \textbf{Solution:} There are two cases.  Either one or the other of $g$ or $h$ is the identiy $e$ or they are both not the identity.  Assume that one or the other is the identity, assuming without loss of generality that $g = e$. Then we acquire $\abs{g}\abs{h} = 1\abs{h} = \abs{eh} = \abs{gh}$. \\
+Next, assume that both are not the identity.  Since $g$ and $h$ commute, $(gh)^{\abs{g}\abs{h}} = g^{\abs{g}\abs{h}}h^{\abs{h}\abs{g}} = ee = e$.  From this, we conclude $\abs{g}\abs{h}$ is a multiple of $\abs{gh}$. \\
+We have $e = (gh)^{\abs{gh}\abs{h}} = g^{\abs{gh}\abs{h}}h^{\abs{h}\abs{gh}} = g^{\abs{gh}\abs{h}}$.  Hence, $\abs{gh}\abs{h}$ is a multiple of $\abs{g}$. Similarly, $\abs{gh}\abs{g}$ is a multiple of $\abs{h}$. 
+Recall the following Lemma from basic number theory: If $a$, $b$, $c$ are integers with $\text{gcd}(a,c) = 1$ and $c|ab$ then $c|b$.  From this we know that $\abs{g}$ divides $\abs{gh}$ and $\abs{h}$ divides $\abs{gh}$.  The universal property of the least common multiple states that if $a|m$ and $b|m$, then $\text{lcm}(a,b)|m$. Since $\text{lcm}(a,b) = \frac{ab}{\text{gcd}(a,b)}$, we have $\text{lcm}(\abs{g},\abs{h}) = \abs{g}\abs{h}$, and from the above result $\abs{g}\abs{h}$ divides $\abs{gh}$.  Since $\abs{g}\abs{h}$ and $\abs{gh}$ are multiples of one another, they must be equal. $\square$ 
+
+\subsection*{II.1.15} \textit{Let $G$ be a commutative group, and let $g \in G$ be an element of maximal finite order, that is, such that if $h \in G$ has finite order, then $\abs{h} \leq \abs{g}$.  Prove that in fact if $h$ has finite order in $G$, $h$ divides $g$. (Hint: Argue by contradiction.  If $\abs{h}$ is finite but does not divide $\abs{g}$, then there is a prime integer $p$ such that $\abs{g} = p^mr$, $\abs{h} = p^ns$, with $r$ and $s$ relatively prime to $p$ and $m<n$.  Use Exercise 1.14 to compute the order of $g^{p^m}h^s$.)} \\
+
+\noindent \textbf{Solution:} Since $\abs{h}$ does not divide $\abs{g}$, there must exist some prime $p$ in the prime decomposition of $\abs{h}$ for which the multiplicity $n$ of $p$ in the prime decomposition of $\abs{h}$ is greater than the multiplicity $m$ of $p$ in the prime decomposition of $\abs{g}$.  Thus, we can write $\abs{g} = p^mr$ and $\abs{h} = p^ns$.  Since $m$ and $n$ are the multiplicities of $p$, we have $\text{gcd}(p,r) = 1$ and $\text{gcd}(p,s) = 1$.  \\
+We have $\abs{g^{p^m}} = \frac{\text{lcm}(p^m, \abs{g})}{p^m} = \frac{\text{lcm}(p^m, p^mr)}{p^m} = r$ and $\abs{h^s} = \frac{\text{lcm}(s, \abs{h})}{s} = \frac{\text{lcm}(s, sp^n)}{s} = p^n$.  From above, we see that $\text{gcd}(\abs{g^{p^m}}, \abs{h^s}) = \text{gcd}(r, p^n) = 1$.  Since $G$ is commutative, from problem II.1.14 we see that $\abs{g^{p^m}h^s} = \abs{g^{p^m}}\abs{h^s} = rp^n > rp^m = \abs{g}$, which contradicts the hypothesis that $\abs{g}$ is the maximal finite order of $G$.  Hence, we must have $\abs{h}$ divides $\abs{g}$. $\square$
 
 
 \end{document}
